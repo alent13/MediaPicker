@@ -1,0 +1,17 @@
+*.iml
+*.apk
+*.dex
+*.class
+/.gradle/*
+/.idea/*
+/.idea/workspace.xml
+/.idea/libraries
+/local.properties
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+/app/src/test/
+/app/src/androidTest/
+/app/build/
+app/libs/
