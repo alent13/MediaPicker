@@ -13,7 +13,7 @@ import java.util.ArrayList
 class SampleActivity : AppCompatActivity() {
 
     // Create an instance of MediaPicker
-    val mediaPicker: MediaPicker = MediaPicker(this)
+    val mediaPicker: MediaPicker = MediaPicker(this) { intent, id ->  startActivityForResult(intent, id) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
