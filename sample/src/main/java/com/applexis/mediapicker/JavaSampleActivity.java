@@ -30,7 +30,13 @@ public class JavaSampleActivity extends AppCompatActivity {
         final TextView mediaPath = findViewById(R.id.mediaPath);
         final ImageView picker = findViewById(R.id.picker);
 
-        mediaPicker = new MediaPicker(this);
+        mediaPicker = new MediaPicker(this, new Function2<Intent, Integer, Unit>() {
+            @Override
+            public Unit invoke(Intent intent, Integer id) {
+                startActivityForResult(intent, id);
+                return null;
+            }
+        });
 
         mediaPicker.setDialog(new MPDialog.Builder(this)
                 .add(MediaPicker.Companion.getCAMERA_PHOTO(), "Take a photo")

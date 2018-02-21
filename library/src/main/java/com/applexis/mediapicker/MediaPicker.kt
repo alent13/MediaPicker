@@ -1,6 +1,7 @@
 package com.applexis.mediapicker
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Environment
 import android.provider.MediaStore
@@ -10,7 +11,10 @@ import java.io.File
 /**
  * @author applexis
  */
-class MediaPicker(private val activity: Activity) {
+class MediaPicker(
+        private val context: Context,
+        private val startActivityForResult: (intent: Intent, id: Int) -> Unit
+) {
 
     companion object {
         val CAMERA_PHOTO = 0
@@ -56,12 +60,12 @@ class MediaPicker(private val activity: Activity) {
 
         tmpDestinationPath = destination.absolutePath
 
-        val uriPhoto = FileProvider.getUriForFile(activity,
-                activity.packageName + ".provider", destination)
+        val uriPhoto = FileProvider.getUriForFile(context,
+                context.packageName + ".provider", destination)
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uriPhoto)
         dismiss()
-        activity.startActivityForResult(intent, CAMERA_IMAGE_CAPTURE)
+        startActivityForResult(intent, CAMERA_IMAGE_CAPTURE)
     }
 
     internal fun pickVideoFromCamera() {
@@ -76,26 +80,26 @@ class MediaPicker(private val activity: Activity) {
 
         tmpDestinationPath = destination.absolutePath
 
-        val uriVideo = FileProvider.getUriForFile(activity,
-                activity.packageName + ".provider", destination)
+        val uriVideo = FileProvider.getUriForFile(context,
+                context.packageName + ".provider", destination)
         val intentVideo = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
         intentVideo.putExtra(MediaStore.EXTRA_OUTPUT, uriVideo)
         dismiss()
-        activity.startActivityForResult(intentVideo, CAMERA_VIDEO_CAPTURE)
+        startActivityForResult(intentVideo, CAMERA_VIDEO_CAPTURE)
     }
 
     internal fun pickPhotoFromGallery() {
         val selectIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         selectIntent.type = "image/*"
         dismiss()
-        activity.startActivityForResult(selectIntent, LIBRARY_PHOTO_REQUEST)
+        startActivityForResult(selectIntent, LIBRARY_PHOTO_REQUEST)
     }
 
     internal fun pickVideoFromGallery() {
         val selectIntentVid = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
         selectIntentVid.type = "video/*"
         dismiss()
-        activity.startActivityForResult(selectIntentVid, LIBRARY_VIDEO_REQUEST)
+        startActivityForResult(selectIntentVid, LIBRARY_VIDEO_REQUEST)
     }
 
     fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -105,7 +109,7 @@ class MediaPicker(private val activity: Activity) {
                     val selectedImageUri = data?.data
                     try {
                         val filePathColumn = arrayOf(MediaStore.Video.Media.DATA)
-                        val cursor = activity.contentResolver.query(selectedImageUri, filePathColumn, null, null, null)
+                        val cursor = context.contentResolver.query(selectedImageUri, filePathColumn, null, null, null)
                         cursor!!.moveToFirst()
 
                         val columnIndex = cursor.getColumnIndex(filePathColumn[0])
