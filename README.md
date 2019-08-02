@@ -26,7 +26,7 @@ Add it in your root build.gradle at the end of repositories:
 Add the dependency
 ```
 	dependencies {
-	        compile 'com.github.alent13:MediaPicker:v0.1'
+	        implementation 'com.github.alent13:MediaPicker:v0.2'
 	}
 ```
 
