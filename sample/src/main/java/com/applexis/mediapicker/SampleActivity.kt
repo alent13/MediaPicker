@@ -2,9 +2,11 @@ package com.applexis.mediapicker
 
 import android.Manifest
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.activity_sample.*
@@ -12,12 +14,14 @@ import java.util.ArrayList
 
 class SampleActivity : AppCompatActivity() {
 
-    // Create an instance of MediaPicker
-    val mediaPicker: MediaPicker = MediaPicker(this)
+    lateinit var mediaPicker: MediaPicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sample)
+
+        // Create an instance of MediaPicker
+        mediaPicker = MediaPicker(this)
 
         // You need to set dialog, otherwise you'll get an exception
         mediaPicker.dialog = MPDialog.Builder(this)
@@ -42,6 +46,7 @@ class SampleActivity : AppCompatActivity() {
                                     else -> "other"
                                 }
                                 mediaPath.text = path
+                                pickedImage.setImageBitmap(BitmapFactory.decodeFile(path))
                             }
                         }
 
