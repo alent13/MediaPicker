@@ -3,13 +3,11 @@ package com.applexis.mediapicker;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -27,9 +25,9 @@ public class JavaSampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
 
-        final TextView mediaType = findViewById(R.id.mediaType);
-        final TextView mediaPath = findViewById(R.id.mediaPath);
-        final ImageView picker = findViewById(R.id.picker);
+        final TextView mediaType = (TextView) findViewById(R.id.mediaType);
+        final TextView mediaPath = (TextView) findViewById(R.id.mediaPath);
+        final ImageView picker = (ImageView) findViewById(R.id.picker);
 
         mediaPicker = new MediaPicker(this);
 
